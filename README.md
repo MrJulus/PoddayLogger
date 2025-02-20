@@ -6,7 +6,7 @@ The **Podday Logger** is a robust logging utility for Node.js applications. It p
 
 ## Installation
 ```bash
-npm install chalk axios fs path typescript ts-node
+npm install podday-logger
 ```
 
 ---
