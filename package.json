@@ -1,7 +1,7 @@
 {
   "name": "podday-logger",
-  "version": "1.0.0",
-  "description": "Un logger simple pour gérer et afficher les logs.",
+  "version": "1.0.1",
+  "description": "A robust logging utility for Node.js applications",
   "main": "dist/logger.js",
   "types": "dist/logger.d.ts",
   "module": "dist/logger.js",
