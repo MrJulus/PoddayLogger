@@ -1,14 +1,20 @@
 {
-  "name": "podday",
+  "name": "podday-logger",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Un logger simple pour gérer et afficher les logs.",
+  "main": "dist/logger.js",
+  "types": "dist/logger.d.ts",
+  "module": "dist/logger.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "example": "ts-node example.ts"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrJulus/PoddayLogger.git"
+  },
   "author": "MrJulus",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.7.9",
     "chalk": "^5.4.1",

@@ -1,5 +1,5 @@
-import { Logger } from './src/logger';
-import { LogViewer } from './src/logViewer';
+import { Logger } from './logger';
+import { LogViewer } from './logViewer';
 
 Logger.init({
     discordWebhookUrl: 'https://discord.com/api/webhooks/.../...',
