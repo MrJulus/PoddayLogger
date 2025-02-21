@@ -22,6 +22,7 @@ class Logger {
     static timestampFormat = 'YYYY-MM-DD HH:mm:ss';
     static silent = false;
     static discordFilterLevels;
+    static filterLevels = [];
     static customLevels = {};
     static stats = {};
     static logFilePath;
@@ -31,6 +32,7 @@ class Logger {
         this.webhookUrl = options.discordWebhookUrl;
         this.messageType = options.discordMessageType || 'simple';
         this.discordFilterLevels = options.discordFilterLevels;
+        this.filterLevels = options.filterLevels || [];
         this.colors = { ...DEFAULT_COLORS, ...options.colors };
         this.timestampFormat = options.timestampFormat || 'YYYY-MM-DD HH:mm:ss';
         this.silent = options.silent || false;
@@ -91,6 +93,9 @@ class Logger {
         }
     }
     static logMessage(level, message, error) {
+        if (this.filterLevels.length > 0 && !this.filterLevels.includes(level.toLowerCase())) {
+            return;
+        }
         const timestamp = this.formatTimestamp();
         const location = level === 'ERROR' && error?.stack ? this.extractLocation(error.stack) : '';
         const formattedMessage = `${this.prefix}[${timestamp}] [${level}] ${message} ${location}`.trim();
@@ -164,8 +169,15 @@ class Logger {
     static colorize(color, text) {
         return chalk_1.default[color](text);
     }
+    static updateOptions(newOptions) {
+        Object.assign(this, newOptions);
+    }
     static getStats() {
         return { ...this.stats };
+    }
+    static getStatsDetails() {
+        const total = Object.values(this.stats).reduce((sum, count) => sum + count, 0);
+        return `📊 Logs recorded: ${total} - ${JSON.stringify(this.stats)}`;
     }
 }
 exports.Logger = Logger;

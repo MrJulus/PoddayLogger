@@ -2,6 +2,7 @@ interface LoggerOptions {
     discordWebhookUrl?: string;
     discordMessageType?: 'embed' | 'simple';
     discordFilterLevels?: string[];
+    filterLevels?: string[];
     colors?: Record<string, {
         color: string;
         bg?: string;
@@ -19,6 +20,7 @@ export declare class Logger {
     private static timestampFormat;
     private static silent;
     private static discordFilterLevels;
+    private static filterLevels;
     private static customLevels;
     private static stats;
     private static logFilePath?;
@@ -43,6 +45,8 @@ export declare class Logger {
     private static formatTimestamp;
     private static extractLocation;
     static colorize(color: string, text: string): string;
+    static updateOptions(newOptions: Partial<LoggerOptions>): void;
     static getStats(): Record<string, number>;
+    static getStatsDetails(): string;
 }
 export {};

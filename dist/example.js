@@ -6,6 +6,7 @@ logger_1.Logger.init({
     discordWebhookUrl: 'https://discord.com/api/webhooks/.../...',
     discordMessageType: 'embed',
     discordFilterLevels: ['error', 'warn'],
+    filterLevels: ['debug'],
     logFilePath: 'logs/app.log',
     prefix: '[App] ',
     colors: {
@@ -19,19 +20,20 @@ logger_1.Logger.init({
     silent: false
 });
 logger_1.Logger.addCustomLevel('customLevel', 'magenta', 'black', 'bold');
-logger_1.Logger.Custom('customLevel', 'Message avec niveau personnalisé.');
-logger_1.Logger.send('Message envoyé par la méthode send.');
-logger_1.Logger.info('Ceci est un message d\'information.');
-logger_1.Logger.success('Opération réussie !');
-logger_1.Logger.debug('Ceci est un message de debug.');
-logger_1.Logger.warn('Attention, ceci est un avertissement.');
-logger_1.Logger.error('Une erreur est survenue.', new Error('Erreur testée'));
+logger_1.Logger.Custom('customLevel', 'Message with custom level.');
+logger_1.Logger.send('Message sent via send method.');
+logger_1.Logger.info('This is an info message.');
+logger_1.Logger.success('Operation successful!');
+logger_1.Logger.debug('This is a debug message.');
+logger_1.Logger.warn('Warning: Something might be wrong.');
+logger_1.Logger.error('An error occurred.', new Error('Test Error'));
 logger_1.Logger.startTimer('testTimer');
 setTimeout(() => {
-    logger_1.Logger.stopTimer('testTimer', 'Durée écoulée pour le timer testTimer');
-    ;
+    logger_1.Logger.stopTimer('testTimer', 'Timer testTimer duration');
 }, 1000);
 logger_1.Logger.getStats();
-logger_1.Logger.colorize('cyan', 'Texte coloré en cyan.');
+logger_1.Logger.colorize('cyan', 'Text in cyan.');
+logger_1.Logger.updateOptions({ silent: true });
+logger_1.Logger.getStatsDetails();
 const viewer = new logViewer_1.LogViewer('logs/app.log');
 viewer.viewLog();

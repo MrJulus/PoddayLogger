@@ -14,16 +14,27 @@ npm install podday-logger
 ## Logger Class
 
 ### Configuration Options (LoggerOptions)
-| Parameter             | Type                | Description                                                                                       | Required |
+| Parameter             | Type                | Description                                                                                        | Required |
 |------------------------|---------------------|---------------------------------------------------------------------------------------------------|----------|
-| discordWebhookUrl      | string              | Discord webhook URL to send logs to a Discord channel.                                             | No       |
+| discordWebhookUrl      | string              | Discord webhook URL to send logs to a Discord channel.                                            | No       |
 | discordMessageType     | 'embed' \| 'simple' | Type of Discord message: `embed` for rich messages, `simple` for plain text.                      | No       |
-| discordFilterLevels    | string[]            | Array of log levels to be sent to Discord.                                                        | No       |
+| discordFilterLevels    | string[]            | Array of log levels to not be sent to Discord.                                                     | No       |
+| filterLevels           | string[]            | Array of log levels to not be show in the console.                                                  | No       |
 | colors                 | Record<string, Object> | Custom colors for log levels, e.g., `{ info: { color: 'blue' } }`.                                | No       |
 | timestampFormat        | string              | Custom timestamp format, e.g., `YYYY-MM-DD HH:mm:ss`.                                              | No       |
 | silent                 | boolean             | If `true`, disables console output.                                                               | No       |
 | logFilePath            | string              | Path to log file. Logs will be saved to this file.                                                 | No       |
 | prefix                 | string              | String to prefix all log messages with.                                                           | No       |
+
+### `colors` Object Structure
+
+The `colors` parameter allows customization of log level colors. Each log level can be assigned an object with the following properties:
+
+| Property  | Type      | Description                                                                                      | Required |
+|-----------|----------|--------------------------------------------------------------------------------------------------|----------|
+| color     | string   | The primary text color (e.g., `'blue'`, `'red'`, `'green'`).                                    | No      |
+| bg        | string   | Background color (optional, e.g., `'bgBlue'`, `'bgRed'`, `'bgGreen'`).                          | No       |
+| supl      | string   | Additional text styling (optional, e.g., `'bold'`, `'italic'`, `'underline'`).                  | No       |
 
 ### Static Methods
 | Method                        | Description                                                                                   |
@@ -41,6 +52,8 @@ npm install podday-logger
 | `stopTimer(label, message?)`   | Stops a timer and logs the elapsed time.                                                       |
 | `colorize(color, text)`        | Returns the text styled with a specific Chalk color.                                            |
 | `getStats()`                   | Returns statistics on how many times each level was logged.                                     |
+| `getStatsDetails()`            | Returns statistics in detail on how many times each level was logged.                            |
+| `updateOptions()`              | Update a value in the init config                                                               |
 
 ---
 
@@ -68,6 +81,7 @@ Logger.init({
     discordWebhookUrl: 'https://discord.com/api/webhooks/.../...',
     discordMessageType: 'embed',
     discordFilterLevels: ['error', 'warn'],
+    filterLevels: ['debug'],
     logFilePath: 'logs/app.log',
     prefix: '[App] ',
     colors: {
@@ -98,6 +112,8 @@ setTimeout(() => {
 
 Logger.getStats();
 Logger.colorize('cyan', 'Text in cyan.');
+Logger.updateOptions({ silent: true });
+Logger.getStatsDetails()
 
 const viewer = new LogViewer('logs/app.log');
 viewer.viewLog();

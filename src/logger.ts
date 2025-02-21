@@ -7,6 +7,7 @@ interface LoggerOptions {
   discordWebhookUrl?: string;
   discordMessageType?: 'embed' | 'simple';
   discordFilterLevels?: string[];
+  filterLevels?: string[];
   colors?: Record<string, { color: string, bg?: string, supl?: string }>;
   timestampFormat?: string;
   silent?: boolean;
@@ -29,6 +30,7 @@ export class Logger {
     private static timestampFormat: string = 'YYYY-MM-DD HH:mm:ss';
     private static silent: boolean = false;
     private static discordFilterLevels: string[] | undefined;
+    private static filterLevels: string[] = [];
     private static customLevels: Record<string, { color: string, bg?: string, supl?: string }> = {};
     private static stats: Record<string, number> = {};
     private static logFilePath?: string;
@@ -39,6 +41,7 @@ export class Logger {
         this.webhookUrl = options.discordWebhookUrl;
         this.messageType = options.discordMessageType || 'simple';
         this.discordFilterLevels = options.discordFilterLevels;
+        this.filterLevels = options.filterLevels || [];
         this.colors = { ...DEFAULT_COLORS, ...options.colors };
         this.timestampFormat = options.timestampFormat || 'YYYY-MM-DD HH:mm:ss';
         this.silent = options.silent || false;
@@ -107,6 +110,10 @@ export class Logger {
     }
 
     private static logMessage(level: string, message: string, error?: Error) {
+        if (this.filterLevels.length > 0 && !this.filterLevels.includes(level.toLowerCase())) {
+            return;
+        }
+
         const timestamp = this.formatTimestamp();
         const location = level === 'ERROR' && error?.stack ? this.extractLocation(error.stack) : '';
         const formattedMessage = `${this.prefix}[${timestamp}] [${level}] ${message} ${location}`.trim();
@@ -182,7 +189,16 @@ export class Logger {
         return (chalk as any)[color](text);
     }
 
+    static updateOptions(newOptions: Partial<LoggerOptions>) {
+        Object.assign(this, newOptions);
+    }
+
     static getStats(): Record<string, number> {
         return { ...this.stats };
+    }
+
+    static getStatsDetails(): string {
+        const total = Object.values(this.stats).reduce((sum, count) => sum + count, 0);
+        return `📊 Logs recorded: ${total} - ${JSON.stringify(this.stats)}`;
     }
 }

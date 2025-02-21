@@ -1,4 +1,0 @@
-/example.ts
-/src/
-|-- logger.ts
-|-- logViewer.ts

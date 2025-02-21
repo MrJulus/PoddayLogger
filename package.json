@@ -1,6 +1,6 @@
 {
   "name": "podday-logger",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A robust logging utility for Node.js applications",
   "main": "dist/logger.js",
   "types": "dist/logger.d.ts",
