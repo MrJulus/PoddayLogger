@@ -39,7 +39,7 @@ The `colors` parameter allows customization of log level colors. Each log level 
 ### Static Methods
 | Method                        | Description                                                                                   |
 |--------------------------------|-----------------------------------------------------------------------------------------------|
-| `init(options: LoggerOptions)` | Initializes the logger with configuration options.                                              |
+| `init(options)` | Initializes the logger with configuration options.                                              |
 | `addCustomLevel(level, color, bg, supl)` | Adds a custom log level with specific text and background color and optional style.           |
 | `Custom(level, message)`       | Logs a message using a custom level.                                                           |
 | `send(message)`                | Prints a raw message to the console and logs it to the file.                                    |
@@ -53,7 +53,7 @@ The `colors` parameter allows customization of log level colors. Each log level 
 | `colorize(color, text)`        | Returns the text styled with a specific Chalk color.                                            |
 | `getStats()`                   | Returns statistics on how many times each level was logged.                                     |
 | `getStatsDetails()`            | Returns statistics in detail on how many times each level was logged.                            |
-| `updateOptions()`              | Update a value in the init config                                                               |
+| `updateOptions()`              | Update a value in the init config.                                                               |
 
 ---
 
